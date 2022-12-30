@@ -7,46 +7,51 @@ import sqlite3
 
 selection = ""
 print("Weight and Balance Calculator")
-try:
-    conn = sqlite3.connect("./databases/aircraft-ledger.db")
-    cur = conn.cursor()
-except:
-    print("Could not connect to Aircraft Ledger database.")
 
+#CONSTANT dictionary with database names
 DATA = {
     0:"aircraft-ledger",
     1:"piper",
     2:"cessna",
     3:"diamond"
 }
+#inverse for easy key lookup
 INVDATA = {v: k for k, v in DATA.items()}
 
+#connects to aicraft-ledger
+helpers.connection(DATA[0])
+
+#generates list of manufacturers
 make = list(result[0].capitalize() for result in helpers.statement(DATA[0], "tables"))
 
-while True:
-    try:
-        print("\n",make,"\n")
-        selection = input("Type choice from one from the above: ")
-        selection.lower()
-        if selection.capitalize() in make:
-            break
-        else:
-            system('clear')
-            print("\nInvalid option.\n")
-    except Exception as x:
-        print(x)
-        break
+#prompts user to select one of them
+selection = helpers.selector(make)
+
+#saves chosen make for later use
+makedb = selection
 
 types = []
 for i in helpers.statement(DATA[0], (f"list{selection}")):
     types += (i)
 
-print(f"\n Choose model: \n\n{types}")
+selection = helpers.selector(types)
 
+cur = helpers.connection(DATA[INVDATA[makedb]])
 
+typetable = helpers.statement(DATA[INVDATA[makedb]], "tables")
 
+results = typetable.fetchall()
+
+types = [result[0] for result in results]
+
+if selection in types:
+    print("Success")
+else:
+    createAC = helpers.sqllist["createAC"]
+    cur.execute(createAC.format(selection))
 
 #TODO PROMPT FOR INPUT
+
 while True:
     try:
         reg = input.strip("Please input aircraft registration: ")
