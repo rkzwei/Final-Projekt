@@ -12,7 +12,9 @@ def createAC():
 
 sqllist = {
     "tables":"SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%';",
-    "listype":"SELECT type FROM "
+    "listcessna":"SELECT type FROM cessna;",
+    "listpiper":"SELECT type FROM piper;",
+    "listdiamond":"SELECT type FROM diamond;"
 
 }
 

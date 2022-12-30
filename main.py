@@ -38,9 +38,10 @@ while True:
         break
 
 types = []
-for i in helpers.statement(DATA[0], "listype"+f"{selection};"):
-    print(i)
+for i in helpers.statement(DATA[0], (f"list{selection}")):
     types += (i)
+
+print(f"\n Choose model: \n\n{types}")
 
 
 
