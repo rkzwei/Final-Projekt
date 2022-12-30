@@ -33,69 +33,86 @@ selection = helpers.selector(make)
 #saves chosen make for later use
 makedb = selection
 
+#turns type into list for iteration
 types = []
 for i in helpers.statement(DATA[0], (f"list{selection}")):
     types += (i)
 
+#selection variable to current selection
 selection = helpers.selector(types)
 
+#connect type database
 cur = helpers.connection(DATA[INVDATA[makedb]])
 
+#sets up table SELECT function
 typetable = helpers.statement(DATA[INVDATA[makedb]], "tables")
 
+#list of types
 results = typetable.fetchall()
 
+#types variable where only first result is in list
 types = [result[0] for result in results]
+
+#lists all aircraft from type table #TODO change to registration only
+listall = helpers.sqllist["listall"]
 
 if selection in types:
     match = True
     print("Found a match: \n")
-    listall = helpers.sqllist["listall"]
-    print(listall.format(selection))
+    print(cur.execute(listall.format(selection)))
 else:
     createAC = helpers.sqllist["createAC"]
     #print(createAC.format(selection))
     cur.execute(createAC.format(selection))
+    print(cur.execute(listall.format(selection)))
 
 #TODO PROMPT FOR INPUT
-
+reg = ""
 while True:
     try:
-        reg = input("Please input aircraft registration: ")
+        reg = input("\nPlease input aircraft registration: ")
         if reg[0] == "N" or reg[0] == "n":
-            break           
+            reg = helpers.clean(reg)
+            break          
         print("Only November A/C supported at this moment.")
         print("To exit, press CTRL + C \n")
     except Exception as x:
         print(x)
         break
 
+#TODO check database for A/C, add if not in there MAYBE: turn this into function
+if reg in (SELECT registration FROM type):
+    pass
+else:
+    while True:
+        try:
+            BEW = float(input("Aircraft BEW? "))
+            if BEW > 0:
+                break
+            print("Invalid Weight")
+        except Exception as x:
+            print(x)
+    while True:
+        try:
+            ACInitCG = float(input("Aircraft CG? "))
+            if ACInitCG > 0:
+                break
+            print("Invalid ARM")
+        except Exception as x:
+            print(x)
+    while True:
+        try:
+            ACMoment = float(input("Aircraft Moment? "))
+            if ACMoment > 0:
+                break
+            print("Invalid Moment")
+        except Exception as z:
+            print(z)
+    print("Added A/C to database!")
 
 
-while True:
-    try:
-        BEW = float(input("Aircraft BEW? "))
-        if BEW > 0:
-            break
-        print("Invalid Weight")
-    except Exception as x:
-        print(x)
-while True:
-    try:
-        ACInitCG = float(input("Aircraft CG? "))
-        if ACInitCG > 0:
-            break
-        print("Invalid ARM")
-    except Exception as x:
-        print(x)
-while True:
-    try:
-        ACMoment = float(input("Aircraft Moment? "))
-        if ACMoment > 0:
-            break
-        print("Invalid Moment")
-    except Exception as z:
-        print(z)
+#TODO Pull data from database, poke user for input, finish main
+
 while True:
     try:
         PWeight = float(input("Your weight? "))

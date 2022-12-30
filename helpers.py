@@ -50,8 +50,14 @@ def selector(listerino):
                 print("\nInvalid option.\n")
                 choice = "y"
                 if input("Would you like to create a new one? y/n\n") == choice:
+                    system('clear')
                     return selection.lower()
                 
         except Exception as x:
             print(x)
             break
+
+def clean(string):
+    string.strip()
+    string.upper()
+    return string
