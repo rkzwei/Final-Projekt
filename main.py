@@ -5,6 +5,9 @@ import aclist
 import helpers
 import sqlite3
 
+new = False
+match = False
+
 selection = ""
 print("Weight and Balance Calculator")
 
@@ -45,22 +48,27 @@ results = typetable.fetchall()
 types = [result[0] for result in results]
 
 if selection in types:
-    print("Success")
+    match = True
+    print("Found a match: \n")
+    listall = helpers.sqllist["listall"]
+    print(listall.format(selection))
 else:
     createAC = helpers.sqllist["createAC"]
+    #print(createAC.format(selection))
     cur.execute(createAC.format(selection))
 
 #TODO PROMPT FOR INPUT
 
 while True:
     try:
-        reg = input.strip("Please input aircraft registration: ")
+        reg = input("Please input aircraft registration: ")
         if reg[0] == "N" or reg[0] == "n":
-            
+            break           
         print("Only November A/C supported at this moment.")
         print("To exit, press CTRL + C \n")
     except Exception as x:
         print(x)
+        break
 
 
 
