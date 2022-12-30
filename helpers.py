@@ -1,5 +1,6 @@
 import aclist
 layout = aclist.LAYOUT
+import sqlite3
 
 #Creates new SQL table for AC
 def createAC():
@@ -10,6 +11,15 @@ def createAC():
     ArmFuel = input("What is the fuel Arm? ")
 
 sqllist = {
-    "manufacturer":"SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%';"
+    "tables":"SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%';",
+    "listype":"SELECT type FROM "
 
 }
+
+
+def statement(db, state):
+    conn = sqlite3.connect(f"./databases/{db}.db")
+    cur = conn.cursor()
+    sqlstate = (sqllist[state])
+    query = cur.execute(sqlstate)
+    return query
