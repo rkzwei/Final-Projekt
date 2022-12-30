@@ -1,9 +1,35 @@
+#TODO add support for other manufacturers
+
 import math
-print("PA28-181 Archer II Weight and Balance Calculator")
-ArmPilotFront = 80.5
-ArmPassenger = 118.1
-ArmFuel = 95.0
-AVGasLbs = 6
+import aclist
+import helpers
+import sqlite3
+
+
+print("Weight and Balance Calculator")
+try:
+    conn = sqlite3.connect("./databases/aircraft-ledger.db")
+    cur = conn.cursor()
+except:
+    print("Could not connect to Aircraft Ledger database.")
+
+print(cur(helpers.sqllist("manufacturer")))
+
+
+
+#TODO PROMPT FOR INPUT
+while True:
+    try:
+        reg = input.strip("Please input aircraft registration: ")
+        if reg[0] == "N" or reg[0] == "n":
+            
+        print("Only November A/C supported at this moment.")
+        print("To exit, press CTRL + C \n")
+    except Exception as x:
+        print(x)
+
+
+
 while True:
     try:
         BEW = float(input("Aircraft BEW? "))
