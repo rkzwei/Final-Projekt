@@ -16,10 +16,10 @@ sqllist = {
     "listcessna":"SELECT type FROM cessna;",
     "listpiper":"SELECT type FROM piper;",
     "listdiamond":"SELECT type FROM diamond;",
-    "listall":"f'SELECT * FROM {type};'",
-    "createAC":"CREATE TABLE {} (ac_id INTEGER PRIMARY KEY, registration TEXT NOT NULL UNIQUE, bew TEXT NOT NULL, cg TEXT NOT NULL, moment TEXT NOT NULL, year INTEGER NOT NULL);"
-
+    "listall":"SELECT * FROM {};",
+    "createAC":"CREATE TABLE {}(ac_id INTEGER PRIMARY KEY, registration TEXT NOT NULL UNIQUE, bew TEXT NOT NULL, cg TEXT NOT NULL, moment TEXT NOT NULL, year INTEGER NOT NULL);"
 }
+
 def connection(database):
     try:
         conn = sqlite3.connect(f"./databases/{database}.db")
@@ -48,6 +48,10 @@ def selector(listerino):
             else:
                 system('clear')
                 print("\nInvalid option.\n")
+                choice = "y"
+                if input("Would you like to create a new one? y/n\n") == choice:
+                    return selection.lower()
+                
         except Exception as x:
             print(x)
             break
