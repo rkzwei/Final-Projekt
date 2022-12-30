@@ -1,11 +1,11 @@
 #TODO add support for other manufacturers
-
+from os import system
 import math
 import aclist
 import helpers
 import sqlite3
 
-
+selection = ""
 print("Weight and Balance Calculator")
 try:
     conn = sqlite3.connect("./databases/aircraft-ledger.db")
@@ -13,7 +13,35 @@ try:
 except:
     print("Could not connect to Aircraft Ledger database.")
 
-print(cur(helpers.sqllist("manufacturer")))
+DATA = {
+    0:"aircraft-ledger",
+    1:"piper",
+    2:"cessna",
+    3:"diamond"
+}
+INVDATA = {v: k for k, v in DATA.items()}
+
+make = list(result[0].capitalize() for result in helpers.statement(DATA[0], "tables"))
+
+while True:
+    try:
+        print("\n",make,"\n")
+        selection = input("Type choice from one from the above: ")
+        selection.lower()
+        if selection.capitalize() in make:
+            break
+        else:
+            system('clear')
+            print("\nInvalid option.\n")
+    except Exception as x:
+        print(x)
+        break
+
+types = []
+for i in helpers.statement(DATA[0], "listype"+f"{selection};"):
+    print(i)
+    types += (i)
+
 
 
 
