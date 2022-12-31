@@ -84,11 +84,15 @@ if selection in types:
     cur.execute(listall.format(selection))
     results = cur.fetchall()
     for row in results:
-        print(row[0])
+        print(row[1])
 else:
     createAC = helpers.sqllist["createAC"]
     #print(createAC.format(selection))
     cur.execute(createAC.format(selection))
+    cur.execute(listall.format(selection))
+    results = cur.fetchall()
+    for row in results:
+        print(row[1])
     #print(cur.execute(listall.format(selection)))
 
 #TODO PROMPT FOR INPUT

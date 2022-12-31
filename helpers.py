@@ -50,7 +50,7 @@ sqllist = {
     "listpiper":"SELECT type FROM piper;",
     "listdiamond":"SELECT type FROM diamond;",
     "listall":"SELECT * FROM {};",
-    "createAC":"CREATE TABLE {}(ac_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, registration TEXT NOT NULL UNIQUE, bew TEXT NOT NULL, cg TEXT NOT NULL, moment TEXT NOT NULL, year INTEGER NOT NULL);"
+    "createAC":"CREATE TABLE {}(ac_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, registration TEXT NOT NULL UNIQUE, bew INTEGER NOT NULL, maxweight INTEGER NOT NULL, cg INTEGER NOT NULL, moment INTEGER NOT NULL, year INTEGER NOT NULL);"
 }
 
 def connection(database):

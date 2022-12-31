@@ -11,6 +11,7 @@ It asks the user for input, compares input with currently available database, an
 
 When every information is taken into account, it outputs a calculation of weight and balance. It warns the user if weight is excessive, as well as out of bounds Center of Gravity.
 
+As it stands, this project is a database management CLI software.
 ## Currently highly experimental.
 # File Descriptions: 
 ## Databases
