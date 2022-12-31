@@ -11,6 +11,9 @@ match = False
 selection = ""
 print("Weight and Balance Calculator")
 
+#update databases
+helpers.update()
+
 #CONSTANT dictionary with database names
 DATA = {
     0:"aircraft-ledger",
@@ -25,6 +28,7 @@ INVDATA = {v: k for k, v in DATA.items()}
 helpers.connection(DATA[0])
 
 #generates list of manufacturers
+
 make = list(result[0].capitalize() for result in helpers.statement(DATA[0], "tables"))
 
 #prompts user to select one of them
@@ -81,7 +85,7 @@ while True:
         break
 
 #TODO check database for A/C, add if not in there MAYBE: turn this into function
-if reg in (SELECT registration FROM type):
+#if reg in (SELECT registration FROM type):
     pass
 else:
     while True:
@@ -113,70 +117,71 @@ else:
 
 #TODO Pull data from database, poke user for input, finish main
 
-while True:
-    try:
-        PWeight = float(input("Your weight? "))
-        if PWeight > 0:
-            break
-        print("Invalid Weight")
-    except Exception as y:
-        print(y)
+#if 1 == 2:
+    while True:
+        try:
+            PWeight = float(input("Your weight? "))
+            if PWeight > 0:
+                break
+            print("Invalid Weight")
+        except Exception as y:
+            print(y)
 
-MomentPilot = float(PWeight) * float(ArmPilotFront)
-print(MomentPilot)
-while True:
-    try:
-        BagWeight = float(input("Passenger Weight? "))
-        if BagWeight > 0:
-            break
-        print("Invalid Weight")
-    except Exception as a:
-        print(a)
-MomentPassenger = BagWeight * ArmPassenger
-print(MomentPassenger)
-ZeroFuelWeight = [float(PWeight) + float(BEW) + float(BagWeight)]
-ZeroFuelMoment = [float(MomentPilot) + float(MomentPassenger) + float(ACMoment)]
-print("Your Zero Fuel Weight: ")
-print(ZeroFuelWeight)
-print("Your Zero Fuel Moment: ")
-print(ZeroFuelMoment)
-while True:
-    try:
-        Fuel = float(input("Fuel in Gallons? "))
-        if 0 < Fuel <= 48:
-            break
-        print("Invalid Fuel")
-    except Exception as f:
-        print(f)
-FuelLbs = (float(Fuel) * 6)
-MomentFuel = FuelLbs * ArmFuel
-print(MomentFuel)
-RampWeight = float(FuelLbs) + float(PWeight) + float(BEW) + float(BagWeight)
-RampMoment = float(MomentFuel) + float(MomentPassenger) + float(MomentPilot) + float(ACMoment)
-print("Your ramp weight is: ")
-print(RampWeight)
-print("Your ramp ARM is: ")
-RampArm = float(RampMoment)/float(RampWeight)
-print(RampArm)
-print("Your ramp moment is: ")
-print(RampMoment)
-while True:
-    try:
-        RunUpFuel = float(input("Fuel in Lbs for Run-up? "))
-        if RunUpFuel > 0:
-            break
-        print("Invalid Fuel")
-    except Exception as f2:
-        print(f2)
-TakeoffWeight = float(RampWeight) - float(RunUpFuel)
-TakeoffMoment = float(RampMoment) - float(float(RunUpFuel)*95)
-TakeoffArm: float = float(TakeoffMoment)/(TakeoffWeight)
-print("Your TakeOff Weight is: ")
-print(TakeoffWeight)
-print("Your TakeOff ARM is: ")
-print(TakeoffArm)
-print("Your TakeOff Moment is: ")
-print(TakeoffMoment)
-if TakeoffWeight > 2550:
-    print(WindowsError)
-    print(">>>>>>>>>>>> Aircraft Overweight <<<<<<<<<<<<")
+    MomentPilot = float(PWeight) * float(ArmPilotFront)
+    print(MomentPilot)
+    while True:
+        try:
+            BagWeight = float(input("Passenger Weight? "))
+            if BagWeight > 0:
+                break
+            print("Invalid Weight")
+        except Exception as a:
+            print(a)
+    MomentPassenger = BagWeight * ArmPassenger
+    print(MomentPassenger)
+    ZeroFuelWeight = [float(PWeight) + float(BEW) + float(BagWeight)]
+    ZeroFuelMoment = [float(MomentPilot) + float(MomentPassenger) + float(ACMoment)]
+    print("Your Zero Fuel Weight: ")
+    print(ZeroFuelWeight)
+    print("Your Zero Fuel Moment: ")
+    print(ZeroFuelMoment)
+    while True:
+        try:
+            Fuel = float(input("Fuel in Gallons? "))
+            if 0 < Fuel <= 48:
+                break
+            print("Invalid Fuel")
+        except Exception as f:
+            print(f)
+    FuelLbs = (float(Fuel) * 6)
+    MomentFuel = FuelLbs * ArmFuel
+    print(MomentFuel)
+    RampWeight = float(FuelLbs) + float(PWeight) + float(BEW) + float(BagWeight)
+    RampMoment = float(MomentFuel) + float(MomentPassenger) + float(MomentPilot) + float(ACMoment)
+    print("Your ramp weight is: ")
+    print(RampWeight)
+    print("Your ramp ARM is: ")
+    RampArm = float(RampMoment)/float(RampWeight)
+    print(RampArm)
+    print("Your ramp moment is: ")
+    print(RampMoment)
+    while True:
+        try:
+            RunUpFuel = float(input("Fuel in Lbs for Run-up? "))
+            if RunUpFuel > 0:
+                break
+            print("Invalid Fuel")
+        except Exception as f2:
+            print(f2)
+    TakeoffWeight = float(RampWeight) - float(RunUpFuel)
+    TakeoffMoment = float(RampMoment) - float(float(RunUpFuel)*95)
+    TakeoffArm: float = float(TakeoffMoment)/(TakeoffWeight)
+    print("Your TakeOff Weight is: ")
+    print(TakeoffWeight)
+    print("Your TakeOff ARM is: ")
+    print(TakeoffArm)
+    print("Your TakeOff Moment is: ")
+    print(TakeoffMoment)
+    if TakeoffWeight > 2550:
+        print(WindowsError)
+        print(">>>>>>>>>>>> Aircraft Overweight <<<<<<<<<<<<")

@@ -11,4 +11,15 @@ It asks the user for input, compares input with currently available database, an
 
 When every information is taken into account, it outputs a calculation of weight and balance. It warns the user if weight is excessive, as well as out of bounds Center of Gravity.
 
-#Currently highly experimental.
+## Currently highly experimental.
+# File Descriptions: 
+## Databases
+* aircraft-ledger[cessna, piper, diamond] schema = type_id, type
+* cessna[c150, c152, c172] schema = ac_id, registration, bew, cg, moment, year
+* piper [TBA]
+* diamond [TBA]
+
+## Python Files
+* main.py -- Main app, which calls upon various functions to execute calculator
+* helpers.py -- Contains dictionaries and functions that maintain code readability in main
+* aclist.py -- Contains prototyping for dictionaries which will eventually be used
