@@ -50,7 +50,7 @@ sqllist = {
     "listpiper":"SELECT type FROM piper;",
     "listdiamond":"SELECT type FROM diamond;",
     "listall":"SELECT * FROM {};",
-    "createAC":"CREATE TABLE {}(ac_id INTEGER PRIMARY KEY, registration TEXT NOT NULL UNIQUE, bew TEXT NOT NULL, cg TEXT NOT NULL, moment TEXT NOT NULL, year INTEGER NOT NULL);"
+    "createAC":"CREATE TABLE {}(ac_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE, registration TEXT NOT NULL UNIQUE, bew TEXT NOT NULL, cg TEXT NOT NULL, moment TEXT NOT NULL, year INTEGER NOT NULL);"
 }
 
 def connection(database):
@@ -74,10 +74,10 @@ def selector(listerino):
             print("\n",listerino,"\n")
             selection = input("Type choice from one from the above: ")
             selection.lower()
-            if selection.capitalize() in listerino:
+            if selection in listerino:
                 system('clear')
-                print("Success")
-                return selection.lower()
+                #print("Success")
+                return selection
             else:
                 system('clear')
                 print("\nInvalid option.\n")

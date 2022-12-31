@@ -9,7 +9,25 @@ new = False
 match = False
 
 selection = ""
-print("Weight and Balance Calculator")
+art = """
+Art by Donovan Blake
+__|__
+\___/
+ | |
+ | |
+_|_|______________
+        /|\ 
+      */ | \*
+      / -+- \\
+  ---o--(_)--o---
+    /  0 " 0  \\
+  */     |     \*
+  /      |      \\
+*/       |       \*
+
+"""
+print(art)
+print("\nWeight and Balance Calculator")
 
 #update databases
 helpers.update()
@@ -29,7 +47,7 @@ helpers.connection(DATA[0])
 
 #generates list of manufacturers
 
-make = list(result[0].capitalize() for result in helpers.statement(DATA[0], "tables"))
+make = list(result[0] for result in helpers.statement(DATA[0], "tables"))
 
 #prompts user to select one of them
 selection = helpers.selector(make)
@@ -63,12 +81,15 @@ listall = helpers.sqllist["listall"]
 if selection in types:
     match = True
     print("Found a match: \n")
-    print(cur.execute(listall.format(selection)))
+    cur.execute(listall.format(selection))
+    results = cur.fetchall()
+    for row in results:
+        print(row[0])
 else:
     createAC = helpers.sqllist["createAC"]
     #print(createAC.format(selection))
     cur.execute(createAC.format(selection))
-    print(cur.execute(listall.format(selection)))
+    #print(cur.execute(listall.format(selection)))
 
 #TODO PROMPT FOR INPUT
 reg = ""
@@ -77,9 +98,10 @@ while True:
         reg = input("\nPlease input aircraft registration: ")
         if reg[0] == "N" or reg[0] == "n":
             reg = helpers.clean(reg)
+            system("clear")
             break          
-        print("Only November A/C supported at this moment.")
-        print("To exit, press CTRL + C \n")
+        print("\nOnly November A/C supported at this moment.")
+        print("\nTo exit, press CTRL + C \n")
     except Exception as x:
         print(x)
         break
