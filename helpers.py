@@ -3,7 +3,7 @@ layout = aclist.LAYOUT
 import sqlite3
 from os import system
 
-#Creates new SQL table for AC
+#creates new SQL table for AC
 def createAC():
     Name = input("Aircraft Make/Model: ")
     Reg = input("What is the airctaft registration? ")
@@ -12,23 +12,23 @@ def createAC():
     ArmFuel = input("What is the fuel Arm? ")
 
 def update():
-    # Connect to the aircraft-ledgers database
+    # connect to the aircraft-ledgers database
     conn = sqlite3.connect("./databases/aircraft-ledger.db")
     cur = conn.cursor()
 
-    # Iterate over the list of manufacturers
+    # iterate over the list of manufacturers
     for manufacturer in aclist.ACMAKE:
-        # Open the database for the current manufacturer
+        # open the database for the current manufacturer
         manufacturer_db = sqlite3.connect(f"./databases/{manufacturer.lower()}.db")
         manufacturer_cur = manufacturer_db.cursor()
 
-        # Get the list of tables in the manufacturer database
+        # get the list of tables in the manufacturer database
         manufacturer_cur.execute("SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%';")
         tables = [table[0] for table in manufacturer_cur.fetchall()]
 
-        # Iterate over the list of tables
+        # iterate over the list of tables
         for table in tables:
-            # Check if the table name is already present in the aircraft-ledgers database
+            # checks if the table name is already present in the aircraft-ledgers database
             cur.execute(f"SELECT type FROM {manufacturer.lower()} WHERE type=?", (table,))
             if not cur.fetchone():
                 # Insert the table name into the aircraft-ledgers database
